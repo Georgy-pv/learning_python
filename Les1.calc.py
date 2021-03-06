@@ -1,14 +1,24 @@
-str_input=input("Введите первое число: ")
+str_command = input("Please type your command a + b or a - b: ")
 
-varA=float(str_input)
-print(type(varA))
+str_A = ''
+str_B = ''
+operation = ''
 
-operation=input("Введите оператор: ")
+for letter in str_command:
+    if letter == '+' or letter == '-' or letter == '*' or letter == '/' or letter == '^' :
+        operation = letter
+    else:
+        if operation == '':
+            str_A += letter
+        else:
+            str_B += letter
 
-str_input2=input("Введите второе число: ")
 
-varB=float(str_input2)
-print(type(varB))
+str_A = str_A.strip()
+str_B = str_B.strip()
+varA=float(str_A)
+varB=float(str_B)
+
 
 result=None
 
