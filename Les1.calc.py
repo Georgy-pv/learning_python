@@ -1,31 +1,35 @@
-str_command = input("Please type your command a + b or a - b: ")
+str_command = input("Please type your command a + b or a - b: ").replace(' ','')
 
+#Знаки для чисел
+sign_A = '' 
+sign_B = ''
+
+#Числа
 str_A = ''
 str_B = ''
-operation = ''
-i = 0
 
+operation = '' 
+i = 0
 
 while i < len(str_command) :
     if str_command[i] == '+' or str_command[i] == '-' or str_command[i] == '*' or str_command[i] == '/' or str_command[i] == '^' :
-        operation = str_command[i]
+        if str_A == '': 
+            sign_A = str_command[i]
+        elif operation != '':
+            sign_B = str_command[i]
+        else:
+            operation = str_command[i]
     else:
         if operation == '':
             str_A += str_command[i]
         else:
             str_B += str_command[i]
-    print(str_command[i])
     i += 1
-    
 
+varA=float(sign_A + str_A)
+varB=float(sign_B + str_B)
 
-str_A = str_A.strip()
-str_B = str_B.strip()
-varA=float(str_A)
-varB=float(str_B)
-
-
-result=None
+result = None
 
 if operation=='/' :
     if varB == 0:
