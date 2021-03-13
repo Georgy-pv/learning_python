@@ -1,4 +1,5 @@
-str_input=input('Введите выражение: ')
+str_input=input('Введите выражение: ').replace()
+
 
 result=eval(str_input)
 
