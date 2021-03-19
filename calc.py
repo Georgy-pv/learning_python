@@ -3,17 +3,17 @@ str_command = input("Please type your command a + b or a - b: ").replace(' ','')
 str_A = ''
 str_B = ''
 
-variables = ()
-operations = tuple()
+variables = ['']
+operations = []
 
 for i, letter in enumerate(str_command):
 	if letter in '+-*/^' and (i > 0) and variables[len(operations)] != '':
-		operations+=(letter, )
-		# variables+=('', )
+		operations.append(letter)
+		variables.append('')
 	else:
 		index = len(operations)
-		variables[index]+=letter
-    print(index)
+		variables[index] += letter
+        
 variables = list(map(float, variables))
 result = variables [0]
 
@@ -40,9 +40,3 @@ for i, operation in enumerate(operations):
         result='Введите корректный оператор'
 
 print("Result: " + str(result))
-
-
-
-a = (2, 5, 4, 7)
-a+=(5, )
-print(a)
