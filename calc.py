@@ -8,6 +8,17 @@ str_B = ''
 variables = ['']
 operations = []
 
+prioritet = {
+    '+': 1,
+    '-': 1,
+    '*': 2,
+    '/': 2,
+    '^': 3
+}
+
+    # СТЕК. ПОЛОЖИЛ ЗНАК И ВЫЧИСЛЕНИЕ ТОГДА, КОГДА НЫНЕШНИЙ ЗНАК ИМЕЕТ ПРИОРИТЕТ РАВНЫЙ ИЛИ МЕНЬШИЙ ЧЕМ ПРЕДЫДУЩИЙ, ВЫЧИСЛЯЕМ ПРЕДЫДУЩИЙ
+
+
 for i, letter in enumerate(str_command):
 	if letter in operations_tuple and (i > 0) and variables[len(operations)] != '':
 		operations.append(letter)
