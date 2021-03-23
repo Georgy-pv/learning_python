@@ -1,3 +1,4 @@
+
 instr = '2 + 2 * 2'.replace(' ','')
 
 hp_ops = tuple('^')
@@ -21,4 +22,3 @@ for letter in instr:
     elif letter in digit_chars:
         actions[-1]['val'] += letter
 print(actions)
-
