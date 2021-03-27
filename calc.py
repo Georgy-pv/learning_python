@@ -1,53 +1,73 @@
-str_command = input("Please type your command a + b or a - b: ").replace(' ','')
-#Числа
+instr = '2 * 3 + 5 + 2^3'.replace(' ','')
 
-operations_tuple = ('^', '*', '/', '+', '-')
-str_A = ''
-str_B = ''
+hp_ops = tuple('^')
+mp_ops = tuple('*/')
+lp_ops = tuple('+-')
+all_ops = hp_ops + mp_ops + lp_ops
 
-variables = ['']
-operations = []
+# digit_chars = tuple(map(str, range(10))) + tuple('.-')
+digit_chars = tuple('0123456789.-')
 
-# prioritet = {
-#     '+': 1,
-#     '-': 1,
-#     '*': 2,
-#     '/': 2,
-#     '^': 3
-# }
-digit_chars = tuple(map(str, range(10))) + tuple('.-')
+actions = []
+d = dict()
+d['opr'] = ''
+d['val'] = ''
 
+actions.append(d)
 
-for i, letter in enumerate(str_command):
-	if letter in operations_tuple and (i > 0) and variables[len(operations)] != '':
-		operations.append(letter)
-		variables.append('')
-	elif letter in digit_chars:
-		index = len(operations)
-		variables[index] += letter
-        
-variables = list(map(float, variables))
-result = variables[0]
+for i, letter in enumerate(instr) : 
+    if letter in all_ops and (i>0) and actions[-1].get('val') != '':
+        actions.append({'opr': letter, 'val': ''})
+    elif letter in digit_chars:
+        actions[-1]['val'] += letter
+# print(actions)
 
-for i, operation in enumerate(operations): 
-    if type (result) == str:
-        break
-    varA=result
-    varB=variables[i+1]
-    if operation=='/' :
-        if varB == 0:
-            result = "Inf"
+result = '0'
+error = False
+
+i = 0 
+actions.reverse()
+while i < len(actions):
+    action = actions[i]
+    operation = action.get('opr')
+    if operation in hp_ops:
+        if operation == '^':
+            pre_res = float(actions[i+1].get('val'))**float(action.get('val'))
+            actions[i+1]['val'] = str(pre_res)
+            del actions[i]
+    else:
+        i+=1
+print(actions)
+actions.reverse()
+
+print(actions)
+i = 0 
+while i < len(actions):
+    action = actions[i]
+    operation = action.get('opr')
+    if operation in mp_ops:
+        if float(action.get('val')) == 0 and operation == '/':
+            result = 'Inf'
+            error = True
         else:
-            result = varA/varB
-    elif operation=='*' : 
-        result=varA*varB
-    elif operation=='-' : 
-        result=varA-varB 
-    elif operation=='+' : 
-        result=varA+varB
-    elif operation=='^' : 
-        result=varA**varB
-    else : 
-        result='Введите корректный оператор'
+            pre_res = eval('{0}{1}{2}'.format(float(actions[i-1].get('val')), operation, float(action.get('val')))) 
+            actions[i-1]['val'] = str(pre_res)
+        del actions[i]
+    else:
+        i+=1
+print(actions)
 
-print("Result: " + str(result))
+if not error:
+    for action in actions:
+        if error:
+            break
+        var_A = result
+        var_B = action.get('val')
+        operation = action.get('opr')
+        if operation in lp_ops:
+            result = eval('{0}{1}{2}'.format(var_A, operation, var_B))
+        else:
+            result = var_B
+print(actions)
+
+print('Результат: {}'.format(result))
