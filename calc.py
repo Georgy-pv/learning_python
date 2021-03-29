@@ -1,4 +1,4 @@
-instr = '2 * 3 + 5 + 2^3'.replace(' ','')
+instr = input('Введите выражение: ').replace(' ','')
 
 hp_ops = tuple('^')
 mp_ops = tuple('*/')
