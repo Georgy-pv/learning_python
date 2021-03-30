@@ -40,6 +40,9 @@ while i < len(actions):
 print(actions)
 actions.reverse()
 
+def calc(var1, oper, var2):
+    return eval('{0}{1}{2}'.format(var1, oper, var2))
+
 print(actions)
 i = 0 
 while i < len(actions):
@@ -50,7 +53,7 @@ while i < len(actions):
             result = 'Inf'
             error = True
         else:
-            pre_res = eval('{0}{1}{2}'.format(float(actions[i-1].get('val')), operation, float(action.get('val')))) 
+            pre_res = calc(float(actions[i-1].get('val')), operation, float(action.get('val'))) 
             actions[i-1]['val'] = str(pre_res)
         del actions[i]
     else:
@@ -65,7 +68,7 @@ if not error:
         var_B = action.get('val')
         operation = action.get('opr')
         if operation in lp_ops:
-            result = eval('{0}{1}{2}'.format(var_A, operation, var_B))
+            result = calc(result, operation, var_B)
         else:
             result = var_B
 print(actions)
