@@ -1,7 +1,7 @@
 """
 Кейс: Разрабтка модели СПА комплекса при отеле 5*
 Задача: разрработать Телеграм-бота для записи на процедуры в СПА комплекс
-Token: 1808675918:AAFON5SS_6FqE2asZHpp2PJ-6aSOGI_nP_I
+Token: 1808675918:AAGRq28a2vtiPsUVJLei79D7SK6_xpRhmC8
 Ссылка: t.me/SpaOkuraBot
 """
 
@@ -56,30 +56,47 @@ Google таблица
 Библиотека pyTelegramBotAPI 
 
 """
-import requests 
+import requests
 import pprint
 import telebot
+from telebot import types
 from telebot.types import Message
 # Переменная с ссылкой на API бота
-BASE_URL = 'https://api.telegram.org/bot1808675918:AAFON5SS_6FqE2asZHpp2PJ-6aSOGI_nP_I/'
-r = requests.get(f'{BASE_URL}getUpdates')
-# Ответ в формате JSON
-# pprint.pprint(r.json()['result'][-1]) 
-
-# Оформление ответного сообщения
-payload = {}
-payload['chat_id'] = 1060475816
-payload['text'] = 'Hello World'
-# Отправление сообщения
-r = requests.post(f'{BASE_URL}sendMessage', data = payload)
-
+BASE_URL = 'https://api.telegram.org/bot1808675918:AAGRq28a2vtiPsUVJLei79D7SK6_xpRhmC8/'
  
-TOKEN = '1808675918:AAFON5SS_6FqE2asZHpp2PJ-6aSOGI_nP_I'
+TOKEN = '1808675918:AAGRq28a2vtiPsUVJLei79D7SK6_xpRhmC8'
 bot = telebot.TeleBot(TOKEN)
-# преобразование сообщения пользователия в верхний регистр и отправка
-@bot.message_handler(func=lambda message: True)
-def upperLetter(message: Message):
-    bot.reply_to(message, message.text.upper())
 
-# Отслеживание изменений
+# Клавиатура
+but_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+item1 = types.KeyboardButton('Кнопка 1')
+item2 = types.KeyboardButton('Кнопка 2')
+
+but_markup.add(item1, item2)
+
+
+# Обработка команды /start
+@bot.message_handler(commands=['start'])
+def welcome(message):
+    bot.send_message(message.chat.id, 'Здравствуйте! \nЯ виртуальный администратор SPA салона Алексей!', reply_markup=but_markup)
+
+
+# Кнопки для описания услуг
+services_buttons = types.ReplyKeyboardMarkup(resize_keyboard=True)
+service1 = types.KeyboardButton('Массажи')
+service2 = types.KeyboardButton('СПА Программы')
+service3 = types.KeyboardButton('Бани/Хаммам')
+service4 = types.KeyboardButton('Эксклюзивные терапии')
+service5 = types.KeyboardButton('Уход за внешностью')
+services_buttons.add(service1, service2, service3, service4, service5)
+
+# Обработка команды /help
+@bot.message_handler(commands=['help'])
+def help_services(message):
+    bot.send_message(message.chat.id, 'Предлагаю ознакомиться с нашими услугами', reply_markup=services_buttons)
+
+
+@bot.message_handler(content_types=['text'])
+def lalala(message):
+    bot.send_message(message.chat.id, message.text)
 bot.polling()
